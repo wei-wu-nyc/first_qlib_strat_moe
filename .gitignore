@@ -1,0 +1,7 @@
+__pycache__/
+*.pkl
+mlruns/
+.ipynb_checkpoints/
+*.pyc
+*.log
+dashboard/data.json

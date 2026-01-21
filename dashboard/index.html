@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quant Strategy Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Adaptive Strategy (Active)</h1>
+            <p class="subtitle">Regime Switching: Bull (Trend) vs Bear (Momentum)</p>
+        </header>
+
+        <section class="metrics-grid">
+            <div class="card">
+                <h3>Annualized Return</h3>
+                <div id="metric-return" class="metric-value">--</div>
+            </div>
+            <div class="card">
+                <h3>Sharpe Ratio</h3>
+                <div id="metric-sharpe" class="metric-value">--</div>
+            </div>
+            <div class="card">
+                <h3>Max Drawdown</h3>
+                <div id="metric-mdd" class="metric-value">--</div>
+            </div>
+            <div class="card">
+                <h3>Information Ratio</h3>
+                <div id="metric-ir" class="metric-value">--</div>
+            </div>
+        </section>
+
+        <section class="chart-section">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h2>Equity Curve</h2>
+                        <a href="analysis.html"
+                            style="color: #00bcd4; text-decoration: none; font-size: 0.9em; margin-top: 5px; display: inline-block;">View
+                            Detailed Analysis &rarr;</a>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn active" onclick="updatePeriod('all')">All</button>
+                        <button class="btn" onclick="updatePeriod('valid_test')">Valid + Test (2021+)</button>
+                        <button class="btn" onclick="updatePeriod('test')">Testing Only (2022+)</button>
+                        <button class="btn" style="border-left: 1px solid #444;" onclick="resetZoom()">Reset
+                            Zoom</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="equityChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="app_final.js?v=2"></script>
+</body>
+
+</html>

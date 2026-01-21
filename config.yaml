@@ -1,0 +1,50 @@
+qlib_init:
+  provider_uri: "D:\\Work\\TradeStationData\\Auto_Export_Data\\20251231\\qlib_antigravity\\day\\us_stock"
+  region: "us"
+
+market: "all"
+benchmark: "QQQ"
+
+data_handler_config:
+  start_time: "2010-01-01"
+  end_time: "2025-12-31"
+  fit_start_time: "2010-01-01"
+  fit_end_time: "2020-12-31"
+  instruments: "all"
+
+  # Using Alpha158 which contains trend information
+  infer_processors:
+    - class: RobustZScoreNorm
+      kwargs:
+        fields_group: feature
+        clip_outlier: true
+    - class: Fillna
+      kwargs:
+        fields_group: feature
+
+  learn_processors:
+    - class: DropnaLabel
+
+  label: ["Ref($close, -1) / $close - 1"] # Predict next day return
+
+port_analysis_config:
+  strategy:
+    class: TopKSkipStrategy
+    module_path: custom_strategy
+    kwargs:
+      signal: <PRED>
+      topk: 10
+      n_drop: 1
+      n_skip: 5
+      only_tradable: true
+  backtest:
+    start_time: "2010-01-01"
+    end_time: "2025-12-31"
+    account: 100000
+    benchmark: "QQQ"
+    exchange_kwargs:
+      limit_threshold: 0.095
+      deal_price: close
+      open_cost: 0.0005
+      close_cost: 0.0015
+      min_cost: 5
